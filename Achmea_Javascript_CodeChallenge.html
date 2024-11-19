@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Policy Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: #ffffff;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #ff7300
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff5500;
+        }
+        .result {
+            text-align: center;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Insurance Calculator</h1>
+        <label for="insuranceType">Select Insurance Type:</label>
+        <select id="insuranceType">
+            <option value="car">Car Insurance</option>
+            <option value="health">Health Insurance</option>
+            <option value="home">Home Insurance</option>
+        </select>
+
+        <div id="carInputs" class="inputs">
+            <label for="carAge">Car Age (in years):</label>
+            <input type="number" id="carAge" min="0">
+        </div>
+
+        <div id="healthInputs" class="inputs" style="display: none;">
+            <label for="age">Your Age:</label>
+            <input type="number" id="age" min="0">
+        </div>
+
+        <div id="homeInputs" class="inputs" style="display: none;">
+            <label for="houseValue">House Value (€):</label>
+            <input type="number" id="houseValue" min="0">
+        </div>
+
+        <button id="calculateBtn">Calculate Premium</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // JavaScript Code
+
+        // Elements
+        const insuranceType = document.getElementById('insuranceType');
+        const carInputs = document.getElementById('carInputs');
+        const healthInputs = document.getElementById('healthInputs');
+        const homeInputs = document.getElementById('homeInputs');
+        const calculateBtn = document.getElementById('calculateBtn');
+        const result = document.getElementById('result');
+
+        // Show/Hide Inputs based on Insurance Type
+        insuranceType.addEventListener('change', () => {
+            carInputs.style.display = insuranceType.value === 'car' ? 'block' : 'none';
+            healthInputs.style.display = insuranceType.value === 'health' ? 'block' : 'none';
+            homeInputs.style.display = insuranceType.value === 'home' ? 'block' : 'none';
+        });
+
+        // Function to calculate premiums
+        const calculatePremium = () => {
+            const type = insuranceType.value;
+            let premium = 0;
+
+            if (type === 'car') {
+                const carAge = parseString(document.getElementById('carAge').value);
+                if (isNaN(carAge) || carAge < 0) {
+                    result.textContent = 'Please enter a valid car age.';
+                    return;
+                }
+                premium = 50 + carAge * 5;
+            } else if (type === 'health') {
+                const age = parseInt(document.getElementById('age').value);
+                if (isNaN(age) || age < 0) {
+                    result.textContent = 'Please enter a valid age.';
+                    return;
+                }
+                premium = 100 + age * 2;
+            } else if (type === 'home') {
+                const houseValue = parseFloat(document.getElementById('houseValue').value);
+                if (isNaN(houseValue) || houseValue <= 0) {
+                    result.textContent = 'Please enter a valid house value.';
+                    return;
+                }
+                premium = 75 + houseValue * 0.001;
+            }
+
+            result.textContent = `Your monthly premium for ${type.charAt(0).toUpperCase() + type.slice(1)} Insurance is €${premium.toFixed(2)}.`;
+        };
+
+        // Add event listener to Calculate Button
+        calculateBtn.addEventListener('click', calculatePremium_click);
+    </script>
+</body>
+</html>
