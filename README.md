@@ -17,7 +17,7 @@ Find the 3 bugs in code
 Test the calculator by entering different values and ensuring the premiums are calculated correctly.
 
 ## Bonus:
-### - Enhance the design with CSS.
+### - Add unit testing
 ### - Add more insurance types or customize the formulas.
 
 ### TIP: You are allowed to use ChatGPT to help you, but you must be able to explain how you fixed it and why you choose this fix.
