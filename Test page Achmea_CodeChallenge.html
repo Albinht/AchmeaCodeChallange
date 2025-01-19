@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simple Insurance Calculator Tests</title>
+</head>
+<body>
+  <h1>Simple Tests</h1>
+  
+  <script>
+    // --- De functies die we willen testen ---
+    function calculateCarPremium(carAge) {
+      if (isNaN(carAge) || carAge < 0) {
+        throw new Error('Invalid car age');
+      }
+      return 50 + carAge * 5;
+    }
+
+    function calculateHealthPremium(age) {
+      if (isNaN(age) || age < 0) {
+        throw new Error('Invalid age');
+      }
+      return 100 + age * 2;
+    }
+
+    function calculateHomePremium(houseValue) {
+      if (isNaN(houseValue) || houseValue <= 0) {
+        throw new Error('Invalid house value');
+      }
+      return 75 + houseValue * 0.001;
+    }
+
+    // --- Hier doen we de “tests” ---
+    function runTests() {
+      const resultsDiv = document.getElementById('results');
+
+      // Helper: om testresultaten netjes te tonen
+      function checkTest(description, actual, expected) {
+        const paragraph = document.createElement('p');
+        paragraph.innerHTML = `<strong>${description}</strong><br>
+         Actual: ${actual}, Expected: ${expected} 
+         => ${actual === expected ? 'PASSED' : 'FAILED'}`;
+        resultsDiv.appendChild(paragraph);
+      }
+
+      // Car Premium Tests
+      checkTest('Car Premium (age=0)', calculateCarPremium(0), 50);
+      checkTest('Car Premium (age=5)', calculateCarPremium(5), 75);
+
+      // Health Premium Tests
+      checkTest('Health Premium (age=0)', calculateHealthPremium(0), 100);
+      checkTest('Health Premium (age=30)', calculateHealthPremium(30), 160);
+
+      // Home Premium Tests
+      checkTest('Home Premium (value=100000)', calculateHomePremium(100000), 175);
+      // Let op: 75 + 100000*0.001 = 175
+    }
+
+    // Zodra de pagina is geladen, voeren we de tests uit:
+    window.onload = runTests;
+  </script>
+
+  <div id="results"></div>
+</body>
+</html>
